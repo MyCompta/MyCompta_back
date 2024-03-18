@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_18_105854) do
+ActiveRecord::Schema[7.1].define(version: 2024_03_18_140300) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -29,6 +29,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_18_105854) do
     t.text "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "society_id"
+    t.index ["society_id"], name: "index_invoices_on_society_id"
     t.index ["user_id"], name: "index_invoices_on_user_id"
   end
 
@@ -46,12 +48,14 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_18_105854) do
     t.integer "zip"
     t.string "city"
     t.string "country"
-    t.integer "siret"
+    t.bigint "siret"
     t.string "status"
     t.integer "capital"
     t.string "email"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "user_id"
+    t.index ["user_id"], name: "index_societies_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -66,5 +70,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_18_105854) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "invoices", "societies"
   add_foreign_key "invoices", "users"
+  add_foreign_key "societies", "users"
 end
