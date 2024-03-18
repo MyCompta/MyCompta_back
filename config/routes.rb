@@ -7,8 +7,14 @@ Rails.application.routes.draw do
         sessions: 'api/users/sessions',
         registrations: 'api/users/registrations'
       }
+
+      resources :societies
+
       resources :invoices
+
   end
+
+  
 
   # scope :api, defaults: { format: :json } do
   #   devise_for :users, controllers: {

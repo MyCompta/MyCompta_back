@@ -1,9 +1,11 @@
 class SocietiesController < ApplicationController
+  
+  before_action :authenticate_user!
   before_action :set_society, only: %i[ show update destroy ]
 
   # GET /societies
   def index
-    @societies = Society.all
+    @societies = Society.where(user: current_user)
 
     render json: @societies
   end

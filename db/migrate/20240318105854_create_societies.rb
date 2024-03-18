@@ -6,7 +6,7 @@ class CreateSocieties < ActiveRecord::Migration[7.1]
       t.integer :zip
       t.string :city
       t.string :country
-      t.integer :siret
+      t.bigint :siret
       t.string :status
       t.integer :capital
       t.string :email
