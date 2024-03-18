@@ -10,9 +10,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_05_224309) do
+ActiveRecord::Schema[7.1].define(version: 2024_03_18_105854) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "invoices", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.jsonb "content"
+    t.datetime "date", precision: nil
+    t.datetime "due_date", precision: nil
+    t.string "title"
+    t.integer "subtotal"
+    t.integer "tva"
+    t.integer "total"
+    t.integer "sale"
+    t.boolean "is_draft"
+    t.boolean "is_paid"
+    t.text "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_invoices_on_user_id"
+  end
 
   create_table "jwt_denylist", force: :cascade do |t|
     t.string "jti", null: false
@@ -20,6 +38,20 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_05_224309) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["jti"], name: "index_jwt_denylist_on_jti"
+  end
+
+  create_table "societies", force: :cascade do |t|
+    t.string "name"
+    t.string "adress"
+    t.integer "zip"
+    t.string "city"
+    t.string "country"
+    t.integer "siret"
+    t.string "status"
+    t.integer "capital"
+    t.string "email"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -34,4 +66,5 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_05_224309) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "invoices", "users"
 end
