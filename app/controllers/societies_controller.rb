@@ -1,9 +1,11 @@
 class SocietiesController < ApplicationController
+  
+  before_action :authenticate_user!
   before_action :set_society, only: %i[ show update destroy ]
 
   # GET /societies
   def index
-    @societies = Society.all
+    @societies = Society.where(user: current_user)
 
     render json: @societies
   end
@@ -46,6 +48,6 @@ class SocietiesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def society_params
-      params.require(:society).permit(:name, :adress, :zip, :city, :country, :siret, :status, :capital, :email)
+      params.require(:society).permit(:name, :adress, :zip, :city, :country, :siret, :status, :capital, :email, :user_id)
     end
 end
