@@ -6,6 +6,11 @@ invoices = []
   users << User.create(email: "user#{i}@user.fr", password: "password")
 end
 
+10.times do
+  name = Faker::Commerce.brand
+  Society.create(name: name, adress: Faker::Address.street_address, zip: Faker::Address.zip_code, city: Faker::Address.city, country: Faker::Address.city, siret: Faker::Number.number(digits:13), status: "SASU", capital: Faker::Number.between(from: 1000, to: 50000), email: "#{name.downcase.gsub(/\s+/, '')}@yopmail.com", user_id: 1)
+end
+
 
 100.times do |i|
   date = Date.today - rand(0..3).month
@@ -19,6 +24,7 @@ end
 
   Invoice.create(
     user_id: 1,
+    society_id: 1,
     title: "Invoice #{i}",
     content: { test: "test" }.to_json,
     date: date,
@@ -30,9 +36,4 @@ end
     is_draft: is_draft,
     is_paid: is_paid
   )
-end
-
-10.times do
-  name = Faker::Commerce.brand
-  Society.create(name: name, adress: Faker::Address.street_address, zip: Faker::Address.zip_code, city: Faker::Address.city, country: Faker::Address.city, siret: Faker::Number.number(digits:14), status: "SASU", capital: Faker::Number.between(from: 1000, to: 50000), email: "#{name.downcase.gsub(/\s+/, '')}@yopmail.com", user_id: 1)
 end
