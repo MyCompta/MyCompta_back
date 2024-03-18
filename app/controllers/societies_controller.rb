@@ -12,6 +12,7 @@ class SocietiesController < ApplicationController
 
   # GET /societies/1
   def show
+    @society = Society.find(params[:id])
     render json: @society
   end
 
