@@ -1,13 +1,17 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  resources :invoices
+
   scope :api, defaults: { format: :json } do
       devise_for :users, controllers: {
         sessions: 'api/users/sessions',
         registrations: 'api/users/registrations'
       }
+
       resources :societies
+
+      resources :invoices
+
   end
 
   
