@@ -48,6 +48,6 @@ class SocietiesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def society_params
-      params.require(:society).permit(:name, :adress, :zip, :city, :country, :siret, :status, :capital, :email, :user_id)
+      params.require(:society).permit(:name, :adress, :zip, :city, :country, :siret, :status, :capital, :email)
     end
 end
