@@ -12,7 +12,12 @@ class SocietiesController < ApplicationController
 
   # GET /societies/1
   def show
-    render json: @society
+    @society = Society.find(params[:id])
+    if user_signed_in? && @society.user_id == current_user.id
+      render json: @society
+    else
+      render json: { error: 'Unauthorized' }, status: :unauthorized
+    end
   end
 
   # POST /societies
@@ -28,8 +33,12 @@ class SocietiesController < ApplicationController
 
   # PATCH/PUT /societies/1
   def update
+    if user_signed_in? && @society.user_id == current_user.id
     if @society.update(society_params)
-      render json: @society
+      
+      
+        render json: @society
+      end
     else
       render json: @society.errors, status: :unprocessable_entity
     end
@@ -37,7 +46,12 @@ class SocietiesController < ApplicationController
 
   # DELETE /societies/1
   def destroy
-    @society.destroy!
+    if user_signed_in? && @society.user_id == current_user.id
+      @society.destroy!
+      render json: {message: 'destroy successful'}
+    else
+      render json: { error: 'Unauthorized' }, status: :unauthorized
+    end
   end
 
   private
@@ -48,6 +62,6 @@ class SocietiesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def society_params
-      params.require(:society).permit(:name, :adress, :zip, :city, :country, :siret, :status, :capital, :email)
+      params.require(:society).permit(:name, :adress, :zip, :city, :country, :siret, :status, :capital, :email, :user_id)
     end
 end
