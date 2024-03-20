@@ -11,7 +11,7 @@ class InvoicesController < ApplicationController
 
   # GET /invoices/1
   def show
-    render json: @invoice
+    render json: { invoice: @invoice, author: @invoice.society }
   end
 
   # POST /invoices
