@@ -1,4 +1,5 @@
 class InvoicesController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_invoice, only: %i[ show update destroy ]
 
   # GET /invoices
@@ -10,12 +11,25 @@ class InvoicesController < ApplicationController
 
   # GET /invoices/1
   def show
-    render json: @invoice
+    render json: { invoice: @invoice, author: @invoice.society }
   end
 
   # POST /invoices
   def create
     @invoice = Invoice.new(invoice_params)
+    @invoice.user = current_user
+
+    if invoice_params.include?(:society_id)
+      @invoice.society = current_user.societies.find(invoice_params[:society_id])
+
+      if @invoice.society.nil?
+        return render json: { error: 'Society not found' }, status: :not_found
+      end
+    else
+      @invoice.society = current_user.societies.first
+    end
+
+    # Invoice.create!(invoice_params.merge(user_id: current_user.id))
 
     if @invoice.save
       render json: @invoice, status: :created, location: @invoice
@@ -42,10 +56,14 @@ class InvoicesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_invoice
       @invoice = Invoice.find(params[:id])
+
+      if @invoice.user_id != current_user.id
+        return render json: { error: 'Unauthorized' }, status: :unauthorized
+      end
     end
 
     # Only allow a list of trusted parameters through.
     def invoice_params
-      params.require(:invoice).permit(:user_id, :content, :date, :due_date, :title, :subtotal, :tva, :total, :sale, :is_draft, :is_paid, :status)
+      params.require(:invoice).permit(:content, :date, :due_date, :title, :subtotal, :tva, :total, :sale, :is_draft, :is_paid, :status, :number, :society_id)
     end
 end
