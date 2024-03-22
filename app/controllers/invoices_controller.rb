@@ -4,7 +4,7 @@ class InvoicesController < ApplicationController
 
   # GET /invoices
   def index
-    @invoices = Invoice.all
+    @invoices = current_user.invoices
 
     render json: @invoices
   end
