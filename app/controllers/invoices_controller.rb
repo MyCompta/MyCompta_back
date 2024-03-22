@@ -11,7 +11,7 @@ class InvoicesController < ApplicationController
 
   # GET /invoices/1
   def show
-    render json: { invoice: @invoice, author: @invoice.society }
+    render json: { invoice: @invoice, author: @invoice.society, client: @invoice.client }
   end
 
   # POST /invoices
@@ -51,6 +51,10 @@ class InvoicesController < ApplicationController
       @invoice.client.update!(invoice_params[:client_infos])
     end
 
+    if invoice_params.include?(:society_infos)
+      @invoice.society.update!(invoice_params[:society_infos])
+    end
+
     if @invoice.update(invoice_params.except(:client_infos))
       render json: @invoice
     else
@@ -75,6 +79,6 @@ class InvoicesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def invoice_params
-      params.require(:invoice).permit(:content, :date, :due_date, :title, :subtotal, :tva, :total, :sale, :is_draft, :is_paid, :status, :number, :additional_info, :client_id, :society_id, client_infos: [:business_name, :first_name, :last_name, :address, :zip, :city, :is_pro, :siret])
+      params.require(:invoice).permit(:content, :date, :due_date, :title, :subtotal, :tva, :total, :sale, :is_draft, :is_paid, :status, :number, :additional_info, :client_id, :society_id, society_infos: [:name, :adress, :zip, :city, :country, :siret, :status, :capital, :email], client_infos: [:business_name, :first_name, :last_name, :address, :zip, :city, :is_pro, :siret])
     end
 end
