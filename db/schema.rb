@@ -14,6 +14,23 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_22_110052) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "clients", force: :cascade do |t|
+    t.string "first_name"
+    t.string "last_name"
+    t.text "address"
+    t.integer "zip"
+    t.string "city"
+    t.bigint "siret"
+    t.boolean "is_pro"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "society_id", null: false
+    t.string "business_name"
+    t.index ["society_id"], name: "index_clients_on_society_id"
+    t.index ["user_id"], name: "index_clients_on_user_id"
+  end
+
   create_table "invoices", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.jsonb "content"
@@ -32,6 +49,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_22_110052) do
     t.bigint "society_id"
     t.string "number"
     t.text "additional_info"
+    t.bigint "client_id", null: false
+    t.index ["client_id"], name: "index_invoices_on_client_id"
     t.index ["society_id"], name: "index_invoices_on_society_id"
     t.index ["user_id"], name: "index_invoices_on_user_id"
   end
@@ -72,6 +91,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_22_110052) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "clients", "societies"
+  add_foreign_key "clients", "users"
+  add_foreign_key "invoices", "clients"
   add_foreign_key "invoices", "societies"
   add_foreign_key "invoices", "users"
   add_foreign_key "societies", "users"
