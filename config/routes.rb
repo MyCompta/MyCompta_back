@@ -12,6 +12,8 @@ Rails.application.routes.draw do
 
       resources :invoices
 
+      resources :users
+
   end
 
   
