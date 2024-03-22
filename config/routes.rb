@@ -9,12 +9,12 @@ Rails.application.routes.draw do
       }
 
       resources :societies
-
+      resources :clients
       resources :invoices
 
   end
 
-  
+
 
   # scope :api, defaults: { format: :json } do
   #   devise_for :users, controllers: {
