@@ -47,7 +47,11 @@ class InvoicesController < ApplicationController
 
   # PATCH/PUT /invoices/1
   def update
-    if @invoice.update(invoice_params)
+    if invoice_params.include?(:client_infos)
+      @invoice.client.update!(invoice_params[:client_infos])
+    end
+
+    if @invoice.update(invoice_params.except(:client_infos))
       render json: @invoice
     else
       render json: @invoice.errors, status: :unprocessable_entity
