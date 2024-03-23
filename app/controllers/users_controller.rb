@@ -11,7 +11,7 @@ class UsersController < ApplicationController
   def show
     if user_signed_in? && @user = current_user
     @user = User.find(params[:id])
-      render json: @user
+      render json: @user, include: :societies
     else
       render json: { error: 'Unauthorized' }, status: :unauthorized
     end
