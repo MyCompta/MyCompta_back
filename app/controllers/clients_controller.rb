@@ -3,7 +3,11 @@ class ClientsController < ApplicationController
 
   # GET /clients
   def index
-    @clients = Client.all
+    if params[:society_id]
+        @clients = Client.where(society_id: params[:society_id])
+      else
+        @clients = Client.all
+      end
 
     render json: @clients, include: :invoices
   end
