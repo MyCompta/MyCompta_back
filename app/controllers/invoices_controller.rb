@@ -4,9 +4,12 @@ class InvoicesController < ApplicationController
 
   # GET /invoices
   def index
-    @invoices = current_user.invoices
-
-    render json: @invoices
+    if params[:society_id]
+        @invoices = Invoice.where(society_id: params[:society_id])
+        render json: @invoices
+      else
+        render json: { error: "Unauthorized" }, status: :unauthorized
+      end
   end
 
   # GET /invoices/1
