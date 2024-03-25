@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_21_123900) do
+ActiveRecord::Schema[7.1].define(version: 2024_03_22_110052) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -37,10 +37,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_21_123900) do
     t.datetime "date", precision: nil
     t.datetime "due_date", precision: nil
     t.string "title"
-    t.integer "subtotal"
-    t.integer "tva"
-    t.integer "total"
-    t.integer "sale"
+    t.float "subtotal"
+    t.float "tva"
+    t.float "total"
+    t.float "sale"
     t.boolean "is_draft"
     t.boolean "is_paid"
     t.text "status"
@@ -48,6 +48,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_21_123900) do
     t.datetime "updated_at", null: false
     t.bigint "society_id"
     t.string "number"
+    t.text "additional_info"
     t.bigint "client_id", null: false
     t.index ["client_id"], name: "index_invoices_on_client_id"
     t.index ["society_id"], name: "index_invoices_on_society_id"
