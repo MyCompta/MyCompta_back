@@ -5,11 +5,10 @@ class ClientsController < ApplicationController
   def index
     if params[:society_id]
         @clients = Client.where(society_id: params[:society_id])
+        render json: @clients, include: :invoices
       else
-        @clients = Client.all
+        render json: { error: "Unauthorized" }, status: :unauthorized
       end
-
-    render json: @clients, include: :invoices
   end
 
   # GET /clients/1

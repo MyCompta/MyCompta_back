@@ -6,11 +6,10 @@ class InvoicesController < ApplicationController
   def index
     if params[:society_id]
         @invoices = Invoice.where(society_id: params[:society_id])
+        render json: @invoices
       else
-        @invoices = Invoice.all
+        render json: { error: "Unauthorized" }, status: :unauthorized
       end
-
-    render json: @invoices
   end
 
   # GET /invoices/1
