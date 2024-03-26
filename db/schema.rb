@@ -48,8 +48,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_22_110052) do
     t.datetime "updated_at", null: false
     t.bigint "society_id"
     t.string "number"
-    t.text "additional_info"
     t.bigint "client_id", null: false
+    t.text "additional_info"
     t.index ["client_id"], name: "index_invoices_on_client_id"
     t.index ["society_id"], name: "index_invoices_on_society_id"
     t.index ["user_id"], name: "index_invoices_on_user_id"
