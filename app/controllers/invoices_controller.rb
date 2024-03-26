@@ -5,7 +5,7 @@ class InvoicesController < ApplicationController
   # GET /invoices
   def index
     if params[:society_id]
-        @invoices = Invoice.where(society_id: params[:society_id])
+        @invoices = current_user.invoices.where(society_id: params[:society_id])
         render json: @invoices
       else
         render json: { error: "Unauthorized" }, status: :unauthorized
@@ -19,7 +19,7 @@ class InvoicesController < ApplicationController
 
   # POST /invoices
   def create
-    @invoice = Invoice.new(invoice_params.except(:client_infos))
+    @invoice = Invoice.new(invoice_params.except(:client_infos, :society_infos))
     @invoice.user = current_user
 
     if invoice_params.include?(:society_id)

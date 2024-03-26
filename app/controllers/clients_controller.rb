@@ -1,4 +1,5 @@
 class ClientsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_client, only: %i[ show update destroy ]
 
   # GET /clients
@@ -45,6 +46,9 @@ class ClientsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_client
       @client = Client.find(params[:id])
+      if current_user.id != @client.user_id
+        return render json: { error: "Unauthorized" }, status: :unauthorized
+      end
     end
 
     # Only allow a list of trusted parameters through.

@@ -5,19 +5,14 @@ class SocietiesController < ApplicationController
 
   # GET /societies
   def index
-    @societies = Society.where(user: current_user)
+    @societies = current_user.societies
 
     render json: @societies
   end
 
   # GET /societies/1
   def show
-    @society = Society.find(params[:id])
-    if user_signed_in? && @society.user_id == current_user.id
-      render json: @society
-    else
-      render json: { error: 'Unauthorized' }, status: :unauthorized
-    end
+    render json: @society
   end
 
   # POST /societies
@@ -60,6 +55,10 @@ class SocietiesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_society
       @society = Society.find(params[:id])
+
+      if @society.user_id != current_user.id
+        return render json: { error: "Unauthorized" }, status: :unauthorized
+      end
     end
 
     # Only allow a list of trusted parameters through.
