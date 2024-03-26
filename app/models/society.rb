@@ -1,7 +1,7 @@
 class Society < ApplicationRecord
   belongs_to :user
-  has_many :invoices
-  has_many :clients
+  has_many :invoices, dependent: :destroy
+  has_many :clients, dependent: :destroy
 
   validates :name, presence: true
   validates :adress, presence: true
