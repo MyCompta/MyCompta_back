@@ -33,14 +33,16 @@ class SocietiesController < ApplicationController
 
   # PATCH/PUT /societies/1
   def update
+    @society = Society.find(params[:id])
+
     if user_signed_in? && @society.user_id == current_user.id
-    if @society.update(society_params)
-      
-      
+      if @society.update(society_params)
         render json: @society
+      else
+        render json: @society.errors, status: :unprocessable_entity
       end
     else
-      render json: @society.errors, status: :unprocessable_entity
+      render json: { error: 'Unauthorized' }, status: :unauthorized
     end
   end
 
