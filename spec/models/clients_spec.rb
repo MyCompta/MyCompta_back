@@ -8,6 +8,7 @@ RSpec.describe Client, type: :model do
     @client = Client.create(first_name: "Martin", last_name: "joe", address: "client adress", zip:"12345", city: "client city", siret: 123, is_pro: "true", user_id: @user.id, society_id: @society.id, business_name: "client business")
   end
 
+  
   context "association" do
     describe "client" do
       it { should belong_to(:user) }

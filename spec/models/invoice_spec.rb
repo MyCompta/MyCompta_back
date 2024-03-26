@@ -8,6 +8,7 @@ RSpec.describe Invoice, type: :model do
     @client = Client.create(first_name: "Martin", last_name: "joe", address: "client adress", zip:"12345", city: "client city", siret: "1234567890147", is_pro: "true", user_id: @user.id, society_id: @society.id, business_name: "client business")
   end
 
+  
   context "association" do
     describe "invoice" do
       it { should belong_to(:user) }
