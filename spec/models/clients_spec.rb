@@ -36,10 +36,6 @@ RSpec.describe Client, type: :model do
     it "validates inclusion of is_pro" do
       should allow_value(true, false).for(:is_pro)
     end
-
-    # it "validates presence of siret" do
-    #   should validate_presence_of(:siret)
-    # end
   end
 
 
