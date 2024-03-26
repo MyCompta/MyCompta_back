@@ -58,7 +58,7 @@ class InvoicesController < ApplicationController
       @invoice.society.update!(invoice_params[:society_infos])
     end
 
-    if @invoice.update(invoice_params.except(:client_infos))
+    if @invoice.update(invoice_params.except(:client_infos, :society_infos))
       render json: @invoice
     else
       render json: @invoice.errors, status: :unprocessable_entity

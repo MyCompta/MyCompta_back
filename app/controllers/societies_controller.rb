@@ -17,7 +17,8 @@ class SocietiesController < ApplicationController
 
   # POST /societies
   def create
-    @society = Society.new(society_params)
+    @society = Society.new(society_params.except(:user_id))
+    @society.user = current_user
 
     if @society.save
       render json: @society, status: :created, location: @society
