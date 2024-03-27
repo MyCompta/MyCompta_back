@@ -5,11 +5,12 @@ class ClientsController < ApplicationController
   # GET /clients
   def index
     if params[:society_id]
-        @clients = current_user.societies.find(params[:society_id]).clients
-        render json: @clients, include: :invoices
-      else
-        render json: { error: "Unauthorized" }, status: :unauthorized
-      end
+      @clients = current_user.societies.find(params[:society_id]).clients
+      render json: @clients, include: :invoices
+    else
+      @clients = current_user.societies.first.clients
+      render json: @clients, include: :invoices
+    end
   end
 
   # GET /clients/1
@@ -55,6 +56,6 @@ class ClientsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def client_params
-      params.require(:client).permit(:first_name, :last_name, :address, :zip, :city, :siret, :is_pro, :user_id, :society_id, :business_name)
+      params.require(:client).permit(:first_name, :last_name, :address, :zip, :city, :siret, :is_pro, :user_id, :society_id, :business_name, :email, :country)
     end
 end

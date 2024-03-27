@@ -36,7 +36,9 @@ users.each do |user|
       siret: Faker::Number.unique.number(digits: 13),
       is_pro: Faker::Boolean.boolean,
       user_id: user.id,
-      society_id: user.societies.all.sample.id
+      society_id: user.societies.all.sample.id,
+      country: Faker::Address.country,
+      email: Faker::Internet.email
     )
   end
 end
