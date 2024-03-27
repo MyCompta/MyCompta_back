@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_22_110052) do
+ActiveRecord::Schema[7.1].define(version: 2024_03_26_185627) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -34,8 +34,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_22_110052) do
   create_table "invoices", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.jsonb "content"
-    t.datetime "date", precision: nil
-    t.datetime "due_date", precision: nil
+    t.datetime "issued_at", precision: nil
+    t.datetime "due_at", precision: nil
     t.string "title"
     t.float "subtotal"
     t.float "tva"
@@ -48,8 +48,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_22_110052) do
     t.datetime "updated_at", null: false
     t.bigint "society_id"
     t.string "number"
-    t.bigint "client_id", null: false
     t.text "additional_info"
+    t.bigint "client_id", null: false
     t.index ["client_id"], name: "index_invoices_on_client_id"
     t.index ["society_id"], name: "index_invoices_on_society_id"
     t.index ["user_id"], name: "index_invoices_on_user_id"
@@ -65,7 +65,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_22_110052) do
 
   create_table "societies", force: :cascade do |t|
     t.string "name"
-    t.string "adress"
+    t.string "address"
     t.integer "zip"
     t.string "city"
     t.string "country"

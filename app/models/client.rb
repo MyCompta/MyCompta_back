@@ -1,7 +1,7 @@
 class Client < ApplicationRecord
   belongs_to :user
   belongs_to :society
-  has_many :invoices
+  has_many :invoices, dependent: :destroy
 
   # validates :business_name, presence: true
   validates :address, presence: true
