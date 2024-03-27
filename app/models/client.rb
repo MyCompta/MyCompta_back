@@ -11,5 +11,6 @@ class Client < ApplicationRecord
   validates :is_pro, inclusion: { in: [true, false] }
   validates :user_id, presence: true
   validates :society_id, presence: true
+  validates :email, format: { with: URI::MailTo::EMAIL_REGEXP, message: "format is invalid" }
 
 end
