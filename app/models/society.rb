@@ -4,7 +4,7 @@ class Society < ApplicationRecord
   has_many :clients, dependent: :destroy
 
   validates :name, presence: true
-  validates :adress, presence: true
+  validates :address, presence: true
   validates :zip, presence: true
   validates :city, presence: true
   validates :country, presence: true
