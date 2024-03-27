@@ -21,7 +21,7 @@ class ClientsController < ApplicationController
   def create
     @client = Client.new(client_params.except(:user_id, :society_id))
     @client.user = current_user
-    @client.society = current_user.societies.find(params[:society_id])
+    @client.society = current_user.societies.find(params[:client][:society_id])
 
     if @client.save
       render json: @client, status: :created, location: @client
