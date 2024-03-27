@@ -11,7 +11,7 @@ users.each do |user|
   name = Faker::Company.name
   Society.create!(
     name: name, 
-    adress: Faker::Address.street_address, 
+    address: Faker::Address.street_address, 
     zip: Faker::Address.zip_code, 
     city: Faker::Address.city, 
     country: Faker::Address.city, 
