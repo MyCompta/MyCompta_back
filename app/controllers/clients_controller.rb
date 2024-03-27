@@ -1,10 +1,11 @@
 class ClientsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_client, only: %i[ show update destroy ]
 
   # GET /clients
   def index
     if params[:society_id]
-        @clients = Client.where(society_id: params[:society_id])
+        @clients = current_user.societies.find(params[:society_id]).clients
         render json: @clients, include: :invoices
       else
         render json: { error: "Unauthorized" }, status: :unauthorized
@@ -18,7 +19,9 @@ class ClientsController < ApplicationController
 
   # POST /clients
   def create
-    @client = Client.new(client_params)
+    @client = Client.new(client_params.except(:user_id, :society_id))
+    @client.user = current_user
+    @client.society = current_user.societies.find(params[:society_id])
 
     if @client.save
       render json: @client, status: :created, location: @client
@@ -29,7 +32,7 @@ class ClientsController < ApplicationController
 
   # PATCH/PUT /clients/1
   def update
-    if @client.update(client_params)
+    if @client.update(client_params.except(:user_id, :society_id))
       render json: @client
     else
       render json: @client.errors, status: :unprocessable_entity
@@ -45,6 +48,9 @@ class ClientsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_client
       @client = Client.find(params[:id])
+      if current_user.id != @client.user_id
+        return render json: { error: "Unauthorized" }, status: :unauthorized
+      end
     end
 
     # Only allow a list of trusted parameters through.
