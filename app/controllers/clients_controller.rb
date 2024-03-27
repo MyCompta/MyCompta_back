@@ -5,11 +5,12 @@ class ClientsController < ApplicationController
   # GET /clients
   def index
     if params[:society_id]
-        @clients = current_user.societies.find(params[:society_id]).clients
-        render json: @clients, include: :invoices
-      else
-        render json: { error: "Unauthorized" }, status: :unauthorized
-      end
+      @clients = current_user.societies.find(params[:society_id]).clients
+      render json: @clients, include: :invoices
+    else
+      @clients = current_user.societies.first.clients
+      render json: @clients, include: :invoices
+    end
   end
 
   # GET /clients/1
