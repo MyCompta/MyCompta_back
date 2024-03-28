@@ -19,5 +19,4 @@ RSpec.describe User, type: :model do
     it { should have_many(:clients).through(:societies) }
     it { should have_many(:invoices) }
   end
-
 end

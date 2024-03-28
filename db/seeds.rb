@@ -1,30 +1,29 @@
+# frozen_string_literal: true
+
 users = []
-invoices = []
 
 # SEED USERS
 2.times do |i|
-  users << User.create(email: "user#{i}@user.fr", password: "password")
+  users << User.create(email: "user#{i}@user.fr", password: 'password')
 end
 
 # SEED SOCIETIES
 users.each do |user|
   name = Faker::Company.name
   Society.create!(
-    name: name, 
-    address: Faker::Address.street_address, 
-    zip: Faker::Address.zip_code, 
-    city: Faker::Address.city, 
-    country: Faker::Address.city, 
-    siret: Faker::Number.number(digits:13), 
-    status: "SASU", 
-    capital: Faker::Number.between(from: 1, to: 50000), 
-    email: "#{name.downcase.gsub(/\s+/, '').gsub(/[^\w.+-]+/, '')}@yopmail.com", 
+    name:,
+    address: Faker::Address.street_address,
+    zip: Faker::Address.zip_code,
+    city: Faker::Address.city,
+    country: Faker::Address.city,
+    siret: Faker::Number.number(digits: 13),
+    status: 'SASU',
+    capital: Faker::Number.between(from: 1, to: 50_000),
+    email: "#{name.downcase.gsub(/\s+/, '').gsub(/[^\w.+-]+/, '')}@yopmail.com",
     user_id: user.id
   )
-end
 
-# SEED CLIENTS
-users.each do |user|
+  # SEED CLIENTS
   10.times do
     Client.create!(
       business_name: Faker::Company.name,
@@ -41,18 +40,16 @@ users.each do |user|
       email: Faker::Internet.email
     )
   end
-end
 
-# SEED INVOICES
-users.each do |user|
+  # SEED INVOICES
   50.times do |i|
-    date = Date.today - rand(0..3).month
+    date = Time.zone.today - rand(0..3).month
     due_date = date + 1.month
     is_draft = [true, false].sample
     is_paid = !is_draft
-    status = is_draft ? "draft" : "paid"
+    status = is_draft ? 'draft' : 'paid'
     society = user.societies.all.sample
-    number = date.strftime("%Y%m%d") + (i + 1).to_s
+    number = date.strftime('%Y%m%d') + (i + 1).to_s
 
     items = []
     rand(1..6).times do |j|
@@ -63,12 +60,12 @@ users.each do |user|
       items << {
         id: j + 1,
         name: Faker::Commerce.product_name,
-        quantity: quantity,
-        unit: ["unit", "heure", "jour", "semaine", "mois", "forfait"].sample,
-        price: price,
+        quantity:,
+        unit: %w[unit heure jour semaine mois forfait].sample,
+        price:,
         description: Faker::Lorem.sentence,
         discount: [{
-          name: "test",
+          name: 'test',
           percentage: 10,
           total: (price * quantity * 0.1).round(2)
         }, nil].sample,
@@ -79,21 +76,20 @@ users.each do |user|
       }
     end
 
-    contenttax = items.reduce({}) do |sum, item|
+    contenttax = items.each_with_object({}) do |item, sum|
       sum[item[:tax][:percentage]] ||= 0
       sum[item[:tax][:percentage]] += item[:tax][:total]
-      sum
     end
 
     contenttax_array = contenttax.map do |percentage, total|
-      { percentage: percentage, total: total.round(2) }
+      { percentage:, total: total.round(2) }
     end
 
-    subtotal = items.reduce(0){|sum, item| sum + item[:price] * item[:quantity]}.round(2)
-    tax = items.reduce(0){|sum, item| sum + item[:tax][:total]}.round(2)
+    subtotal = items.reduce(0) { |sum, item| sum + (item[:price] * item[:quantity]) }.round(2)
+    tax = items.reduce(0) { |sum, item| sum + item[:tax][:total] }.round(2)
     total = subtotal + tax
     sale = items.reduce(0) do |sum, item|
-      if (item[:discount] && item[:discount][:total])
+      if item[:discount] && item[:discount][:total]
         sum + item[:discount][:total]
       else
         sum
@@ -105,18 +101,18 @@ users.each do |user|
       society_id: society.id,
       client_id: society.clients.all.sample.id,
       title: "Invoice #{number}",
-      number: number,
-      content: {items: items, tax: contenttax_array}.to_json,
+      number:,
+      content: { items:, tax: contenttax_array }.to_json,
       issued_at: date,
       due_at: due_date,
       subtotal: subtotal.round(2),
       tva: tax.round(2),
       total: total.round(2),
-      status: status,
+      status:,
       sale: sale.round(2),
-      is_draft: is_draft,
-      is_paid: is_paid,
-      category: ["invoice", "quotation"].sample
+      is_draft:,
+      is_paid:,
+      category: %w[invoice quotation].sample
     )
   end
 end

@@ -1,16 +1,17 @@
+# frozen_string_literal: true
+
 class ClientsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_client, only: %i[ show update destroy ]
+  before_action :set_client, only: %i[show update destroy]
 
   # GET /clients
   def index
-    if params[:society_id]
-      @clients = current_user.societies.find(params[:society_id]).clients
-      render json: @clients, include: :invoices
-    else
-      @clients = current_user.societies.first.clients
-      render json: @clients, include: :invoices
-    end
+    @clients = if params[:society_id]
+                 current_user.societies.find(params[:society_id]).clients
+               else
+                 current_user.societies.first.clients
+               end
+    render json: @clients, include: :invoices
   end
 
   # GET /clients/1
@@ -46,16 +47,18 @@ class ClientsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_client
-      @client = Client.find(params[:id])
-      if current_user.id != @client.user_id
-        return render json: { error: "Unauthorized" }, status: :unauthorized
-      end
-    end
 
-    # Only allow a list of trusted parameters through.
-    def client_params
-      params.require(:client).permit(:first_name, :last_name, :address, :zip, :city, :siret, :is_pro, :user_id, :society_id, :business_name, :email, :country)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_client
+    @client = Client.find(params[:id])
+    return unless current_user.id != @client.user_id
+
+    render json: { error: 'Unauthorized' }, status: :unauthorized
+  end
+
+  # Only allow a list of trusted parameters through.
+  def client_params
+    params.require(:client).permit(:first_name, :last_name, :address, :zip, :city, :siret, :is_pro, :user_id,
+                                   :society_id, :business_name, :email, :country)
+  end
 end

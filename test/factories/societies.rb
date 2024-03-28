@@ -1,13 +1,15 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :society do
-    name { "MyString" }
-    address { "MyString" }
+    name { 'MyString' }
+    address { 'MyString' }
     zip { 1 }
-    city { "MyString" }
-    country { "MyString" }
+    city { 'MyString' }
+    country { 'MyString' }
     siret { 1 }
-    status { "MyString" }
+    status { 'MyString' }
     capital { 1 }
-    email { "MyString" }
+    email { 'MyString' }
   end
 end

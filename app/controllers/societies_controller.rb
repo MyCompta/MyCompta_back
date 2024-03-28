@@ -1,7 +1,8 @@
+# frozen_string_literal: true
+
 class SocietiesController < ApplicationController
-  
   before_action :authenticate_user!
-  before_action :set_society, only: %i[ show update destroy ]
+  before_action :set_society, only: %i[show update destroy]
 
   # GET /societies
   def index
@@ -46,24 +47,26 @@ class SocietiesController < ApplicationController
   def destroy
     if user_signed_in? && @society.user_id == current_user.id
       @society.destroy!
-      render json: {message: 'destroy successful'}
+      render json: { message: 'destroy successful' }
     else
       render json: { error: 'Unauthorized' }, status: :unauthorized
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_society
-      @society = Society.find(params[:id])
 
-      if @society.user_id != current_user.id
-        return render json: { error: "Unauthorized" }, status: :unauthorized
-      end
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_society
+    @society = Society.find(params[:id])
 
-    # Only allow a list of trusted parameters through.
-    def society_params
-      params.require(:society).permit(:name, :address, :zip, :city, :country, :siret, :status, :capital, :email, :user_id)
-    end
+    return unless @society.user_id != current_user.id
+
+    render json: { error: 'Unauthorized' }, status: :unauthorized
+  end
+
+  # Only allow a list of trusted parameters through.
+  def society_params
+    params.require(:society).permit(:name, :address, :zip, :city, :country, :siret, :status, :capital, :email,
+                                    :user_id)
+  end
 end
