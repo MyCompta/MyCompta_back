@@ -10,7 +10,7 @@ RSpec.describe UsersController, type: :controller do
         user = User.create(email: "user@example.com", password: "password123")
         sign_in user
         
-        society = Society.create(name: "company", adress: "main street", zip: 90000, city: "cityville", country: "elpais", siret: 1234567890123, status: "micro", capital: 1000, email: "company@yopmail.com", user: user)
+        society = Society.create(name: "company", address: "main street", zip: 90000, city: "cityville", country: "elpais", siret: 1234567890123, status: "micro", capital: 1000, email: "company@yopmail.com", user: user)
 
         get :show, params: { id: user.id }
 

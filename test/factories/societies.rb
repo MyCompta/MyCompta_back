@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :society do
     name { "MyString" }
-    adress { "MyString" }
+    address { "MyString" }
     zip { 1 }
     city { "MyString" }
     country { "MyString" }

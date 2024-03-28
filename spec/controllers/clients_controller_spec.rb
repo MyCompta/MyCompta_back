@@ -10,9 +10,9 @@ RSpec.describe ClientsController, type: :controller do
         user = User.create(email: "user@yopmail.com", password: "123456")
         sign_in user
         
-        society = Society.create(name: "company", adress: "main street", zip: "90000", city: "cityville", country: "elpais", siret:"1234567890123", status: "micro", capital:"1000", email:"company@yopmail.com", user_id: user.id)
+        society = Society.create(name: "company", address: "main street", zip: "90000", city: "cityville", country: "elpais", siret:"1234567890123", status: "micro", capital:"1000", email:"company@yopmail.com", user_id: user.id)
 
-        client = Client.create(first_name: "Martin", last_name: "joe", address: "client adress", zip:"12345", city: "client city", siret: 123, is_pro: true, user_id: user.id, society_id: society.id, business_name: "client business")
+        client = Client.create(first_name: "Martin", last_name: "joe", address: "client address", zip:"12345", city: "client city", siret: 123, is_pro: true, user_id: user.id, society_id: society.id, business_name: "client business")
 
         get :index, params: { society_id: society.id }
 
@@ -34,9 +34,9 @@ RSpec.describe ClientsController, type: :controller do
       user = User.create(email: "user@yopmail.com", password: "123456")
       sign_in user
       
-      society = Society.create(name: "company", adress: "main street", zip: "90000", city: "cityville", country: "elpais", siret:"1234567890123", status: "micro", capital:"1000", email:"company@yopmail.com", user_id: user.id)
+      society = Society.create(name: "company", address: "main street", zip: "90000", city: "cityville", country: "elpais", siret:"1234567890123", status: "micro", capital:"1000", email:"company@yopmail.com", user_id: user.id)
 
-      client = Client.create(first_name: "Martin", last_name: "joe", address: "client adress", zip:"12345", city: "client city", siret: 123, is_pro: true, user_id: user.id, society_id: society.id, business_name: "client business")
+      client = Client.create(first_name: "Martin", last_name: "joe", address: "client address", zip:"12345", city: "client city", siret: 123, is_pro: true, user_id: user.id, society_id: society.id, business_name: "client business")
 
       get :show, params: { id: client.id }
 
@@ -50,7 +50,7 @@ RSpec.describe ClientsController, type: :controller do
       user = User.create(email: "user@yopmail.com", password: "123456")
       sign_in user
       
-      society = Society.create(name: "company", adress: "main street", zip: "90000", city: "cityville", country: "elpais", siret:"1234567890123", status: "micro", capital:"1000", email:"company@yopmail.com", user_id: user.id)
+      society = Society.create(name: "company", address: "main street", zip: "90000", city: "cityville", country: "elpais", siret:"1234567890123", status: "micro", capital:"1000", email:"company@yopmail.com", user_id: user.id)
 
       expect {
         post :create, params: { client: { first_name: "John", last_name: "Doe", address: "client address", zip: "54321", city: "client city", siret: 456, is_pro: true, user_id: user.id, society_id: society.id, business_name: "client business" } }
@@ -65,9 +65,9 @@ RSpec.describe ClientsController, type: :controller do
       user = User.create(email: "user@yopmail.com", password: "123456")
       sign_in user
       
-      society = Society.create(name: "company", adress: "main street", zip: "90000", city: "cityville", country: "elpais", siret:"1234567890123", status: "micro", capital:"1000", email:"company@yopmail.com", user_id: user.id)
+      society = Society.create(name: "company", address: "main street", zip: "90000", city: "cityville", country: "elpais", siret:"1234567890123", status: "micro", capital:"1000", email:"company@yopmail.com", user_id: user.id)
 
-      client = Client.create(first_name: "Martin", last_name: "joe", address: "client adress", zip:"12345", city: "client city", siret: 123, is_pro: true, user_id: user.id, society_id: society.id, business_name: "client business")
+      client = Client.create(first_name: "Martin", last_name: "joe", address: "client address", zip:"12345", city: "client city", siret: 123, is_pro: true, user_id: user.id, society_id: society.id, business_name: "client business")
 
       patch :update, params: { id: client.id, client: { first_name: "Updated Name" } }
 
@@ -81,9 +81,9 @@ RSpec.describe ClientsController, type: :controller do
       user = User.create(email: "user@yopmail.com", password: "123456")
       sign_in user
       
-      society = Society.create(name: "company", adress: "main street", zip: "90000", city: "cityville", country: "elpais", siret:"1234567890123", status: "micro", capital:"1000", email:"company@yopmail.com", user_id: user.id)
+      society = Society.create(name: "company", address: "main street", zip: "90000", city: "cityville", country: "elpais", siret:"1234567890123", status: "micro", capital:"1000", email:"company@yopmail.com", user_id: user.id)
 
-      client = Client.create(first_name: "Martin", last_name: "joe", address: "client adress", zip:"12345", city: "client city", siret: 123, is_pro: true, user_id: user.id, society_id: society.id, business_name: "client business")
+      client = Client.create(first_name: "Martin", last_name: "joe", address: "client address", zip:"12345", city: "client city", siret: 123, is_pro: true, user_id: user.id, society_id: society.id, business_name: "client business")
 
       expect {
         delete :destroy, params: { id: client.id }

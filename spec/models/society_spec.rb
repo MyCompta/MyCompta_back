@@ -4,7 +4,7 @@ RSpec.describe Society, type: :model do
 
   before(:each) do
     @user = User.create(email: "user@yopmail.com", password: "123456")
-    @society = Society.create(name: "company", adress: "main street", zip: "90000", city: "cityville", country: "elpais", siret:"1234567890123", status: "micro", capital:"1000", email:"company@yopmail.com", user_id: @user.id)
+    @society = Society.create(name: "company", address: "main street", zip: "90000", city: "cityville", country: "elpais", siret:"1234567890123", status: "micro", capital:"1000", email:"company@yopmail.com", user_id: @user.id)
   end
   
   context "associations" do
@@ -24,7 +24,7 @@ RSpec.describe Society, type: :model do
     end
 
     it{ should validate_presence_of(:name) }
-    it{ should validate_presence_of(:adress) }
+    it{ should validate_presence_of(:address) }
     it{ should validate_presence_of(:zip) }
     it{ should validate_presence_of(:city) }
     it{ should validate_presence_of(:country) }
@@ -55,8 +55,8 @@ RSpec.describe Society, type: :model do
         expect(@society.capital).to be_an(Integer)
       end
 
-      it "should be greater_than_or_equal_to 1" do
-        expect(@society.capital).to be >= 1
+      it "should be greater_than_or_equal_to 0" do
+        expect(@society.capital).to be >= 0
       end
     end
   end

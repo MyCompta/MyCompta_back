@@ -12,7 +12,7 @@ class SocietiesControllerTest < ActionDispatch::IntegrationTest
 
   test "should create society" do
     assert_difference("Society.count") do
-      post societies_url, params: { society: { adress: @society.adress, capital: @society.capital, city: @society.city, country: @society.country, email: @society.email, name: @society.name, siret: @society.siret, status: @society.status, zip: @society.zip } }, as: :json
+      post societies_url, params: { society: { address: @society.address, capital: @society.capital, city: @society.city, country: @society.country, email: @society.email, name: @society.name, siret: @society.siret, status: @society.status, zip: @society.zip } }, as: :json
     end
 
     assert_response :created
@@ -24,7 +24,7 @@ class SocietiesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update society" do
-    patch society_url(@society), params: { society: { adress: @society.adress, capital: @society.capital, city: @society.city, country: @society.country, email: @society.email, name: @society.name, siret: @society.siret, status: @society.status, zip: @society.zip } }, as: :json
+    patch society_url(@society), params: { society: { address: @society.address, capital: @society.capital, city: @society.city, country: @society.country, email: @society.email, name: @society.name, siret: @society.siret, status: @society.status, zip: @society.zip } }, as: :json
     assert_response :success
   end
 

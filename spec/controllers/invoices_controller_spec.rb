@@ -10,9 +10,9 @@ RSpec.describe InvoicesController, type: :controller do
         user = User.create(email: "user@yopmail.com", password: "123456")
         sign_in user
         
-        society = Society.create(name: "company", adress: "main street", zip: "90000", city: "cityville", country: "elpais", siret:"1234567890123", status: "micro", capital:"1000", email:"company@yopmail.com", user_id: user.id)
+        society = Society.create(name: "company", address: "main street", zip: "90000", city: "cityville", country: "elpais", siret:"1234567890123", status: "micro", capital:"1000", email:"company@yopmail.com", user_id: user.id)
 
-        invoice = Invoice.create(content: "Invoice content", date: Date.today, due_date: Date.tomorrow, title: "Invoice Title", subtotal: 100, tva: 20, total: 120, sale: true, is_draft: false, is_paid: false, status: "pending", number: "INV001", additional_info: "Additional information", user_id: user.id, society_id: society.id)
+        invoice = Invoice.create(content: "Invoice content", issued_at: Date.today, due_at: Date.tomorrow, title: "Invoice Title", subtotal: 100, tva: 20, total: 120, sale: true, is_draft: false, is_paid: false, status: "pending", number: "INV001", additional_info: "Additional information", user_id: user.id, society_id: society.id)
 
         get :index, params: { society_id: society.id }
 
@@ -33,11 +33,11 @@ RSpec.describe InvoicesController, type: :controller do
       user = User.create(email: "user@yopmail.com", password: "123456")
       sign_in user
       
-      society = Society.create(name: "company", adress: "main street", zip: "90000", city: "cityville", country: "elpais", siret:"1234567890123", status: "micro", capital:"1000", email:"company@yopmail.com", user_id: user.id)
+      society = Society.create(name: "company", address: "main street", zip: "90000", city: "cityville", country: "elpais", siret:"1234567890123", status: "micro", capital:"1000", email:"company@yopmail.com", user_id: user.id)
 
-      client = Client.create(first_name: "Martin", last_name: "joe", address: "client adress", zip:"12345", city: "client city", siret: "1234567890147", is_pro: true, user_id: user.id, society_id: society.id, business_name: "client business")
+      client = Client.create(first_name: "Martin", last_name: "joe", address: "client address", zip:"12345", city: "client city", siret: "1234567890147", is_pro: true, user_id: user.id, society_id: society.id, business_name: "client business")
 
-      invoice = Invoice.create(content: "Invoice content", date: Date.today, due_date: Date.tomorrow, title: "Invoice Title", subtotal: 100, tva: 20, total: 120, sale: true, is_draft: false, is_paid: false, status: "pending", number: "INV001", additional_info: "Additional information", user_id: user.id, society_id: society.id, client_id: client.id)
+      invoice = Invoice.create(content: "Invoice content", issued_at: Date.today, due_at: Date.tomorrow, title: "Invoice Title", subtotal: 100, tva: 20, total: 120, sale: true, is_draft: false, is_paid: false, status: "pending", number: "INV001", additional_info: "Additional information", user_id: user.id, society_id: society.id, client_id: client.id)
 
       get :show, params: { id: invoice.id }
 
@@ -53,9 +53,9 @@ RSpec.describe InvoicesController, type: :controller do
       user = User.create(email: "user@yopmail.com", password: "123456")
       sign_in user
       
-      society = Society.create(name: "company", adress: "main street", zip: "90000", city: "cityville", country: "elpais", siret:"1234567890123", status: "micro", capital:"1000", email:"company@yopmail.com", user_id: user.id)
+      society = Society.create(name: "company", address: "main street", zip: "90000", city: "cityville", country: "elpais", siret:"1234567890123", status: "micro", capital:"1000", email:"company@yopmail.com", user_id: user.id)
 
-      client = Client.create(first_name: "Martin", last_name: "joe", address: "client adress", zip:"12345", city: "client city", siret: "1234567890147", is_pro: true, user_id: user.id, society_id: society.id, business_name: "client business")
+      client = Client.create(first_name: "Martin", last_name: "joe", address: "client address", zip:"12345", city: "client city", siret: "1234567890147", is_pro: true, user_id: user.id, society_id: society.id, business_name: "client business")
 
 
     end
@@ -66,11 +66,11 @@ RSpec.describe InvoicesController, type: :controller do
       user = User.create(email: "user@yopmail.com", password: "123456")
       sign_in user
       
-      society = Society.create(name: "company", adress: "main street", zip: "90000", city: "cityville", country: "elpais", siret:"1234567890123", status: "micro", capital:"1000", email:"company@yopmail.com", user_id: user.id)
+      society = Society.create(name: "company", address: "main street", zip: "90000", city: "cityville", country: "elpais", siret:"1234567890123", status: "micro", capital:"1000", email:"company@yopmail.com", user_id: user.id)
 
-      client = Client.create(first_name: "Martin", last_name: "joe", address: "client adress", zip:"12345", city: "client city", siret: "1234567890147", is_pro: true, user_id: user.id, society_id: society.id, business_name: "client business")
+      client = Client.create(first_name: "Martin", last_name: "joe", address: "client address", zip:"12345", city: "client city", siret: "1234567890147", is_pro: true, user_id: user.id, society_id: society.id, business_name: "client business")
 
-      invoice = Invoice.create(content: "Invoice content", date: Date.today, due_date: Date.tomorrow, title: "Invoice Title", subtotal: 100, tva: 20, total: 120, sale: true, is_draft: false, is_paid: false, status: "pending", number: "INV001", additional_info: "Additional information", user_id: user.id, society_id: society.id, client_id: client.id)
+      invoice = Invoice.create(content: "Invoice content", issued_at: Date.today, due_at: Date.tomorrow, title: "Invoice Title", subtotal: 100, tva: 20, total: 120, sale: true, is_draft: false, is_paid: false, status: "pending", number: "INV001", additional_info: "Additional information", user_id: user.id, society_id: society.id, client_id: client.id)
 
       patch :update, params: { id: invoice.id, invoice: { content: "Updated Content" } }
 
