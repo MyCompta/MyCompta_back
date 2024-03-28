@@ -45,7 +45,7 @@ end
 
 # SEED INVOICES
 users.each do |user|
-  30.times do |i|
+  50.times do |i|
     date = Date.today - rand(0..3).month
     due_date = date + 1.month
     is_draft = [true, false].sample
@@ -115,7 +115,8 @@ users.each do |user|
       status: status,
       sale: sale.round(2),
       is_draft: is_draft,
-      is_paid: is_paid
+      is_paid: is_paid,
+      category: ["invoice", "quotation"].sample
     )
   end
 end

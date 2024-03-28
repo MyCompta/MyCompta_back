@@ -1,20 +1,34 @@
 class InvoicesController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_invoice, only: %i[ show update destroy ]
+  before_action :set_invoice, only: %i[ show update destroy quotation_show ]
 
   # GET /invoices
   def index
     if params[:society_id]
-        @invoices = current_user.invoices.where(society_id: params[:society_id])
-        render json: @invoices
-      else
-        render json: { error: "Unauthorized" }, status: :unauthorized
-      end
+      @invoices = current_user.invoices.includes(:client).where(society_id: params[:society_id])
+      @invoices = @invoices.where(category: params[:category]) if params[:category]
+    else
+      @invoices = current_user.invoices.includes(:client)
+    end
+  
+    render json: @invoices.as_json(include: { client: { only: [:first_name, :last_name, :business_name, :is_pro] } })
   end
 
   # GET /invoices/1
   def show
-    render json: { invoice: @invoice, author: @invoice.society, client: @invoice.client }
+    if @invoice.category == "invoice"
+      render json: { invoice: @invoice, author: @invoice.society, client: @invoice.client }
+    else
+      render json: { error: "Not an invoice" }, status: :not_found
+    end
+  end
+
+  def quotation_show
+    if @invoice.category == "quotation"
+      render json: { invoice: @invoice, author: @invoice.society, client: @invoice.client }
+    else 
+      render json: { error: "Not a quotation" }, status: :not_found
+    end
   end
 
   # POST /invoices
@@ -82,6 +96,6 @@ class InvoicesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def invoice_params
-      params.require(:invoice).permit(:content, :issued_at, :due_at, :title, :subtotal, :tva, :total, :sale, :is_draft, :is_paid, :status, :number, :additional_info, :client_id, :society_id, society_infos: [:name, :adress, :zip, :city, :country, :siret, :status, :capital, :email], client_infos: [:business_name, :first_name, :last_name, :address, :zip, :city, :is_pro, :siret, :email, :country])
+      params.require(:invoice).permit(:category, :content, :issued_at, :due_at, :title, :subtotal, :tva, :total, :sale, :is_draft, :is_paid, :status, :number, :additional_info, :client_id, :society_id, society_infos: [:name, :adress, :zip, :city, :country, :siret, :status, :capital, :email], client_infos: [:business_name, :first_name, :last_name, :address, :zip, :city, :is_pro, :siret, :email, :country])
     end
 end
