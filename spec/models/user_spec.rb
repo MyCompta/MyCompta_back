@@ -15,7 +15,8 @@ RSpec.describe User, type: :model do
   end
 
   describe 'associations' do
-    it { should have_many(:properties).dependent(:destroy) }
+    it { should have_many(:societies).dependent(:destroy) }
+    it { should have_many(:clients).through(:societies) }
+    it { should have_many(:invoices) }
   end
-
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Client < ApplicationRecord
   belongs_to :user
   belongs_to :society
@@ -9,8 +11,5 @@ class Client < ApplicationRecord
   validates :city, presence: true
   validates :siret, numericality: { only_integer: true }, allow_nil: true
   validates :is_pro, inclusion: { in: [true, false] }
-  validates :user_id, presence: true
-  validates :society_id, presence: true
-  validates :email, format: { with: URI::MailTo::EMAIL_REGEXP, message: "format is invalid" }, allow_nil: true
-
+  validates :email, format: { with: URI::MailTo::EMAIL_REGEXP, message: I18n.t(:invalid_email_format) }, allow_nil: true
 end

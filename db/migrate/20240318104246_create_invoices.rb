@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateInvoices < ActiveRecord::Migration[7.1]
   def change
     create_table :invoices do |t|
@@ -10,8 +12,8 @@ class CreateInvoices < ActiveRecord::Migration[7.1]
       t.integer :tva
       t.integer :total
       t.integer :sale
-      t.boolean :is_draft
-      t.boolean :is_paid
+      t.boolean :is_draft, default: true, null: false
+      t.boolean :is_paid, default: false, null: false
       t.text :status
 
       t.timestamps

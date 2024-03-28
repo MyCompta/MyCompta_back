@@ -1,5 +1,6 @@
-class UsersController < ApplicationController
+# frozen_string_literal: true
 
+class UsersController < ApplicationController
   before_action :authenticate_user!
 
   # def index
@@ -9,8 +10,8 @@ class UsersController < ApplicationController
   # end
 
   def show
-    if user_signed_in? && @user = current_user
-    @user = User.find(params[:id])
+    if user_signed_in? && (@user = current_user)
+      @user = User.find(params[:id])
       render json: @user, include: :societies
     else
       render json: { error: 'Unauthorized' }, status: :unauthorized
@@ -18,12 +19,11 @@ class UsersController < ApplicationController
   end
 
   def destroy
-  if @user = current_user
-    @user.destroy
-      render json: {message: 'destroy successful'}
+    if (@user = current_user)
+      @user.destroy
+      render json: { message: 'destroy successful' }
     else
       render json: { error: 'Unauthorized' }, status: :unauthorized
     end
   end
-
 end

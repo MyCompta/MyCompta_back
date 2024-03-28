@@ -44,8 +44,10 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'faker', '~> 3.2'
   gem 'letter_opener', '~> 1.4', '>= 1.4.1'
-  gem 'table_print', '~> 1.5', '>= 1.5.7'
   gem 'rspec-rails', '~> 6.1', '>= 6.1.1', require: false
+  gem 'rubocop', require: false
+  gem 'rubocop-rails', require: false
   gem 'shoulda-matchers', '~> 6.1'
+  gem 'table_print', '~> 1.5', '>= 1.5.7'
 end
-gem "dockerfile-rails", ">= 1.6", :group => :development
+gem 'dockerfile-rails', '>= 1.6', group: :development

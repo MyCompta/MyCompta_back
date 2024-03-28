@@ -1,0 +1,28 @@
+require: rubocop-rails
+
+AllCops:
+  NewCops: enable
+
+Layout/LineLength:
+  Exclude:
+    - spec/**/*
+    - db/**/*
+    - config/**/*
+
+Metrics/BlockLength:
+  Exclude:
+    - spec/**/*
+    - db/**/*
+    - config/**/*
+
+Metrics/MethodLength:
+  Exclude:
+    - spec/**/*
+    - db/**/*
+    - config/**/*
+
+Metrics/AbcSize:
+  Max: 18
+
+Style/Documentation:
+  Enabled: false

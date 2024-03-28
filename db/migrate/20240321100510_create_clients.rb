@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateClients < ActiveRecord::Migration[7.1]
   def change
     create_table :clients do |t|
@@ -7,7 +9,7 @@ class CreateClients < ActiveRecord::Migration[7.1]
       t.integer :zip
       t.string :city
       t.integer :siret
-      t.boolean :is_pro
+      t.boolean :is_pro, default: false, null: false
       t.references :user, null: false, foreign_key: true
 
       t.timestamps
