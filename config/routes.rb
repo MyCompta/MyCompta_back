@@ -11,6 +11,7 @@ Rails.application.routes.draw do
       resources :societies
       resources :clients
       resources :invoices
+      get 'quotations/:id', to: 'invoices#quotation_show'
 
       resources :users
 
