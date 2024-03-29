@@ -9,5 +9,5 @@ class Register < ApplicationRecord
   validates :payment_method, presence: true
   validates :paid_at, presence: true
   validates :amount, presence: true
-  validates :is_income, presence: true
+  validates :is_income, inclusion: { in: [true, false] }
 end
