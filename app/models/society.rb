@@ -4,6 +4,7 @@ class Society < ApplicationRecord
   belongs_to :user
   has_many :invoices, dependent: :destroy
   has_many :clients, dependent: :destroy
+  has_many :registers, dependent: :destroy
 
   validates :name, presence: true, length: { in: 2..50 }
   validates :address, presence: true, length: { in: 2..50 }

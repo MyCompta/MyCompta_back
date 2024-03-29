@@ -7,5 +7,6 @@ class User < ApplicationRecord
 
   has_many :societies, dependent: :destroy
   has_many :clients, through: :societies
+  has_many :registers, through: :societies
   has_many :invoices, dependent: :destroy
 end
