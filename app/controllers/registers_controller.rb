@@ -24,8 +24,8 @@ class RegistersController < ApplicationController
   # POST /registers
   def create
     user = current_user
-    society = user.societies.find(register_params[:society_id])
-    @register = Register.new(register_params.except(:user_id, :society_id).merge(user:, society:))
+    society = user.societies.find_by(id: register_params[:society_id]) || user.societies.first
+    @register = Register.new(register_params.except(:user_id, :society_id).merge(society:))
 
     if @register.save
       render json: @register, status: :created, location: @register

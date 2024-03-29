@@ -49,5 +49,6 @@ group :development, :test do
   gem 'rubocop-rails', require: false
   gem 'shoulda-matchers', '~> 6.1'
   gem 'table_print', '~> 1.5', '>= 1.5.7'
+  gem 'rails-controller-testing'
 end
 gem 'dockerfile-rails', '>= 1.6', group: :development
