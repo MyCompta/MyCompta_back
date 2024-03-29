@@ -46,8 +46,14 @@ users.each do |user|
     date = Time.zone.today - rand(0..3).month
     due_date = date + 1.month
     is_draft = [true, false].sample
-    is_paid = !is_draft
-    status = is_draft ? 'draft' : 'paid'
+    is_paid = is_draft ? false : [true, false].sample
+    status = if is_draft
+               'draft'
+             elsif is_paid
+               'paid'
+             else
+               'pending'
+             end
     society = user.societies.all.sample
     number = date.strftime('%Y%m%d') + (i + 1).to_s
 
