@@ -5,7 +5,6 @@ class Register < ApplicationRecord
   belongs_to :invoice, optional: true
   delegate :user, to: :society
 
-  validates :society, presence: true
   validates :title, presence: true, length: { maximum: 255, minimum: 3 }
   validates :payment_method, presence: true
   validates :paid_at, presence: true

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # spec/models/register_spec.rb
 require 'rails_helper'
 
@@ -9,10 +11,10 @@ RSpec.describe Register, type: :model do
   # Set up a valid register to test validations
   let(:register) do
     described_class.new(
-      society: society,
+      society:,
       title: 'Sample Register',
       payment_method: 'cash',
-      paid_at: Time.now,
+      paid_at: Time.zone.now,
       amount: 100,
       is_income: true
     )

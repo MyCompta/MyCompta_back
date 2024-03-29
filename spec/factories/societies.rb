@@ -11,11 +11,11 @@ FactoryBot.define do
     status { 'micro' }
     capital { 1000 }
     email { 'company@yopmail.com' }
-    
+
     transient do
       user { nil }
     end
-    
+
     after(:build) do |society, evaluator|
       society.user = evaluator.user || create(:user)
     end
