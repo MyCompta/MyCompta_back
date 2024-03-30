@@ -13,7 +13,13 @@ class RegistersController < ApplicationController
                    current_user.registers
                  end
 
-    render json: @registers
+    if params[:year] && params[:month]
+      beginning_of_month = Date.new(params[:year].to_i, params[:month].to_i, 1)
+      end_of_month = beginning_of_month.end_of_month
+      @registers = @registers.where(paid_at: beginning_of_month..end_of_month)
+    end
+
+    render json: @registers.order(paid_at: :desc)
   end
 
   # GET /registers/1
