@@ -121,4 +121,17 @@ users.each do |user|
       category: %w[invoice quotation].sample
     )
   end
+
+  # SEED REGISTERS
+  10.times do
+    Register.create!(
+      society_id: user.societies.all.sample.id,
+      invoice_id: [user.invoices.all.sample.id, nil].sample,
+      title: Faker::Lorem.sentence,
+      paid_at: Time.zone.today - rand(0..3).month,
+      payment_method: %w[card cash transfer cheque other].sample,
+      is_income: [true, false].sample,
+      amount: rand(1.00..1000.00)
+    )
+  end
 end

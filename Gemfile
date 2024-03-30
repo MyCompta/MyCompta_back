@@ -48,6 +48,7 @@ group :development, :test do
   gem 'faker', '~> 3.2'
   gem 'letter_opener', '~> 1.4', '>= 1.4.1'
   gem 'rails_best_practices', '~> 1.23', '>= 1.23.2'
+  gem 'rails-controller-testing'
   gem 'rspec-rails', '~> 6.1', '>= 6.1.1', require: false
   gem 'rubocop', require: false
   gem 'rubocop-rails', require: false
