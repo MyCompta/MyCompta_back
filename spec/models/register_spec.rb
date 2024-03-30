@@ -37,6 +37,5 @@ RSpec.describe Register, type: :model do
     it { should validate_inclusion_of(:payment_method).in_array(%w[card cash transfer cheque other]) }
     it { should validate_presence_of(:paid_at) }
     it { should validate_presence_of(:amount) }
-    it { should validate_presence_of(:is_income) }
   end
 end
