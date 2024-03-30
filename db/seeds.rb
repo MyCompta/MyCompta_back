@@ -121,10 +121,8 @@ users.each do |user|
       category: %w[invoice quotation].sample
     )
   end
-end
 
-# SEED REGISTERS
-users.each do |user|
+  # SEED REGISTERS
   10.times do
     Register.create!(
       society_id: user.societies.all.sample.id,
@@ -133,7 +131,7 @@ users.each do |user|
       paid_at: Time.zone.today - rand(0..3).month,
       payment_method: %w[card cash transfer cheque other].sample,
       is_income: [true, false].sample,
-      amount: rand(1.00..1000.00),
+      amount: rand(1.00..1000.00)
     )
   end
 end

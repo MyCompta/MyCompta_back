@@ -6,20 +6,9 @@ class RegistersController < ApplicationController
 
   # GET /registers
   def index
-    @registers = if params[:society_id]
-                   current_user.registers
-                               .where(society_id: params[:society_id])
-                 else
-                   current_user.registers
-                 end
-
-    if params[:year] && params[:month]
-      beginning_of_month = Date.new(params[:year].to_i, params[:month].to_i, 1)
-      end_of_month = beginning_of_month.end_of_month
-      @registers = @registers.where(paid_at: beginning_of_month..end_of_month)
-    end
-
-    render json: @registers.order(paid_at: :desc)
+    @registers = filter_by_month_and_year(current_user.registers.order(paid_at: :desc))
+    @registers = @registers.where(society_id: params[:society_id]) if params[:society_id]
+    render json: @registers
   end
 
   # GET /registers/1
@@ -68,5 +57,13 @@ class RegistersController < ApplicationController
   # Only allow a list of trusted parameters through.
   def register_params
     params.require(:register).permit(:paid_at, :society_id, :amount, :title, :comment, :payment_method, :is_income)
+  end
+
+  def filter_by_month_and_year(registers)
+    return registers unless (year = params[:year]) && (month = params[:month])
+
+    beginning_of_month = Date.new(year.to_i, month.to_i, 1)
+    end_of_month = beginning_of_month.end_of_month
+    registers.where(paid_at: beginning_of_month..end_of_month)
   end
 end
