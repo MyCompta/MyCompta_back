@@ -3,29 +3,34 @@
 users = []
 
 # SEED USERS
-2.times do |i|
+3.times do |i|
   users << User.create(email: "user#{i}@user.fr", password: 'password')
 end
 
 # SEED SOCIETIES
-users.each do |user|
+
+societies = []
+
+10.times do
   name = Faker::Company.name
-  Society.create!(
-    name:,
+  societies << Society.create!(
+    name: name,
     address: Faker::Address.street_address,
     zip: Faker::Address.zip_code,
     city: Faker::Address.city,
-    country: Faker::Address.city,
+    country: Faker::Address.country,
     siret: Faker::Number.number(digits: 13),
     status: 'SASU',
     capital: Faker::Number.between(from: 1, to: 50_000),
     email: "#{name.downcase.gsub(/\s+/, '').gsub(/[^\w.+-]+/, '')}@yopmail.com",
-    user_id: user.id
+    user_id: users.sample.id
   )
+end
 
-  # SEED CLIENTS
+#   # SEED CLIENTS
+  clients = []
   10.times do
-    Client.create!(
+    clients << Client.create!(
       business_name: Faker::Company.name,
       first_name: Faker::Name.first_name,
       last_name: Faker::Name.last_name,
@@ -34,21 +39,21 @@ users.each do |user|
       city: Faker::Address.city,
       siret: Faker::Number.unique.number(digits: 13),
       is_pro: Faker::Boolean.boolean,
-      user_id: user.id,
-      society_id: user.societies.all.sample.id,
+      user_id: users.sample.id,
+      society_id: societies.sample.id,
       country: Faker::Address.country,
       email: Faker::Internet.email
     )
   end
 
-  # SEED INVOICES
+#   # SEED INVOICES
   50.times do |i|
     date = Time.zone.today - rand(0..3).month
     due_date = date + 1.month
     is_draft = [true, false].sample
     is_paid = !is_draft
     status = is_draft ? 'draft' : 'paid'
-    society = user.societies.all.sample
+    society = societies.sample.id
     number = date.strftime('%Y%m%d') + (i + 1).to_s
 
     items = []
@@ -97,9 +102,9 @@ users.each do |user|
     end
 
     Invoice.create(
-      user_id: user.id,
-      society_id: society.id,
-      client_id: society.clients.all.sample.id,
+      user_id: users.sample.id,
+      society_id: societies.sample.id,
+      client_id: clients.sample.id,
       title: "Invoice #{number}",
       number:,
       content: { items:, tax: contenttax_array }.to_json,
@@ -115,4 +120,3 @@ users.each do |user|
       category: %w[invoice quotation].sample
     )
   end
-end
