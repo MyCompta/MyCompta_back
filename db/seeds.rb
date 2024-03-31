@@ -50,10 +50,18 @@ end
   50.times do |i|
     date = Time.zone.today - rand(0..3).month
     due_date = date + 1.month
-    is_draft = [true, false].sample
     is_paid = !is_draft
     status = is_draft ? 'draft' : 'paid'
     society = societies.sample.id
+    is_paid = is_draft ? false : [true, false].sample
+    status = if is_draft
+               'draft'
+             elsif is_paid
+               'paid'
+             else
+               'pending'
+             end
+    society = user.societies.all.sample
     number = date.strftime('%Y%m%d') + (i + 1).to_s
 
     items = []
@@ -120,3 +128,18 @@ end
       category: %w[invoice quotation].sample
     )
   end
+
+
+  # SEED REGISTERS
+  10.times do
+    Register.create!(
+      society_id: user.societies.all.sample.id,
+      invoice_id: [user.invoices.all.sample.id, nil].sample,
+      title: Faker::Lorem.sentence,
+      paid_at: Time.zone.today - rand(0..3).month,
+      payment_method: %w[card cash transfer cheque other].sample,
+      is_income: [true, false].sample,
+      amount: rand(1.00..1000.00)
+    )
+  end
+end

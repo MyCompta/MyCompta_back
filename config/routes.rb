@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  resources :registers
   scope :api, defaults: { format: :json } do
     devise_for :users, controllers: {
       sessions: 'api/users/sessions',
@@ -11,6 +12,7 @@ Rails.application.routes.draw do
     resources :clients
     resources :invoices
     get 'quotations/:id', to: 'invoices#quotation_show'
+
     
     resources :charts do
       collection do
@@ -28,6 +30,9 @@ Rails.application.routes.draw do
         
       end
     end
+
+    resources :registers
+
 
     resources :users
   end
