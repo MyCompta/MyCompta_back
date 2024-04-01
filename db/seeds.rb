@@ -135,5 +135,4 @@ users.each do |user|
       amount: amount
     )
   end
-
 end

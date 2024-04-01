@@ -14,6 +14,7 @@ Rails.application.routes.draw do
     get 'quotations/:id', to: 'invoices#quotation_show'
     resources :registers
 
+
     resources :charts do
       collection do
         get 'sum_all_client'
