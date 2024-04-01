@@ -20,7 +20,9 @@ class RegistersController < ApplicationController
   def create
     user = current_user
     society = user.societies.find_by(id: register_params[:society_id]) || user.societies.first
-    @register = Register.new(register_params.except(:user_id, :society_id).merge(society:))
+    @register = Register.new(register_params.except(:user_id, :society_id, :is_income).merge(society:))
+    @register.is_income = @register.amount >= 0
+
 
     if @register.save
       render json: @register, status: :created, location: @register
