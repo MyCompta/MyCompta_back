@@ -37,7 +37,7 @@ class InvoicesController < ApplicationController
   def create
     user = current_user
     user_societies = user.societies
-    society = user_societies.find(params[:society_id]) || user_societies.first
+    society = user_societies.find(invoice_params[:society_id]) || user_societies.first
     client = get_or_create_client(invoice_params)
     invoice = Invoice.new(invoice_params.except(:client_infos, :society_infos).merge(society:, user:, client:))
 
