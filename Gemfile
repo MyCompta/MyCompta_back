@@ -39,13 +39,13 @@ gem 'rack-cors'
 
 gem 'devise', '~> 4.9', '>= 4.9.3'
 gem 'devise-jwt', '~> 0.11.0'
+gem 'faker', '~> 3.2'
 
 group :development, :test do
   gem 'brakeman', '~> 3.3', '>= 3.3.2'
   gem 'bundle-audit', '~> 0.1.0'
   gem 'database_consistency', '~> 1.7', '>= 1.7.23', require: false
   gem 'factory_bot_rails'
-  gem 'faker', '~> 3.2'
   gem 'letter_opener', '~> 1.4', '>= 1.4.1'
   gem 'rails_best_practices', '~> 1.23', '>= 1.23.2'
   gem 'rails-controller-testing'
