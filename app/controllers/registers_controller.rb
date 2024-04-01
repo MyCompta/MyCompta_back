@@ -23,6 +23,7 @@ class RegistersController < ApplicationController
     @register = Register.new(register_params.except(:user_id, :society_id, :is_income).merge(society:))
     @register.is_income = @register.amount >= 0
 
+
     if @register.save
       render json: @register, status: :created, location: @register
     else
