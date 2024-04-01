@@ -41,9 +41,14 @@ gem 'devise', '~> 4.9', '>= 4.9.3'
 gem 'devise-jwt', '~> 0.11.0'
 
 group :development, :test do
+  gem 'brakeman', '~> 3.3', '>= 3.3.2'
+  gem 'bundle-audit', '~> 0.1.0'
+  gem 'database_consistency', '~> 1.7', '>= 1.7.23', require: false
   gem 'factory_bot_rails'
   gem 'faker', '~> 3.2'
   gem 'letter_opener', '~> 1.4', '>= 1.4.1'
+  gem 'rails_best_practices', '~> 1.23', '>= 1.23.2'
+  gem 'rails-controller-testing'
   gem 'rspec-rails', '~> 6.1', '>= 6.1.1', require: false
   gem 'rubocop', require: false
   gem 'rubocop-rails', require: false

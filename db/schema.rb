@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_28_192130) do
+ActiveRecord::Schema[7.1].define(version: 2024_03_29_114224) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -66,6 +66,21 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_28_192130) do
     t.index ["jti"], name: "index_jwt_denylist_on_jti"
   end
 
+  create_table "registers", force: :cascade do |t|
+    t.datetime "paid_at"
+    t.bigint "society_id", null: false
+    t.bigint "invoice_id"
+    t.float "amount"
+    t.text "title"
+    t.text "comment"
+    t.string "payment_method"
+    t.boolean "is_income", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["invoice_id"], name: "index_registers_on_invoice_id"
+    t.index ["society_id"], name: "index_registers_on_society_id"
+  end
+
   create_table "societies", force: :cascade do |t|
     t.string "name"
     t.string "address"
@@ -100,5 +115,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_28_192130) do
   add_foreign_key "invoices", "clients"
   add_foreign_key "invoices", "societies"
   add_foreign_key "invoices", "users"
+  add_foreign_key "registers", "invoices"
+  add_foreign_key "registers", "societies"
   add_foreign_key "societies", "users"
 end

@@ -3,34 +3,29 @@
 users = []
 
 # SEED USERS
-3.times do |i|
+2.times do |i|
   users << User.create(email: "user#{i}@user.fr", password: 'password')
 end
 
 # SEED SOCIETIES
-
-societies = []
-
-10.times do
+users.each do |user|
   name = Faker::Company.name
-  societies << Society.create!(
-    name: name,
+  Society.create!(
+    name:,
     address: Faker::Address.street_address,
     zip: Faker::Address.zip_code,
     city: Faker::Address.city,
-    country: Faker::Address.country,
+    country: Faker::Address.city,
     siret: Faker::Number.number(digits: 13),
     status: 'SASU',
     capital: Faker::Number.between(from: 1, to: 50_000),
     email: "#{name.downcase.gsub(/\s+/, '').gsub(/[^\w.+-]+/, '')}@yopmail.com",
-    user_id: users.sample.id
+    user_id: user.id
   )
-end
 
-#   # SEED CLIENTS
-  clients = []
+  # SEED CLIENTS
   10.times do
-    clients << Client.create!(
+    Client.create!(
       business_name: Faker::Company.name,
       first_name: Faker::Name.first_name,
       last_name: Faker::Name.last_name,
@@ -39,21 +34,27 @@ end
       city: Faker::Address.city,
       siret: Faker::Number.unique.number(digits: 13),
       is_pro: Faker::Boolean.boolean,
-      user_id: users.sample.id,
-      society_id: societies.sample.id,
+      user_id: user.id,
+      society_id: user.societies.all.sample.id,
       country: Faker::Address.country,
       email: Faker::Internet.email
     )
   end
 
-#   # SEED INVOICES
+  # SEED INVOICES
   50.times do |i|
     date = Time.zone.today - rand(0..3).month
     due_date = date + 1.month
     is_draft = [true, false].sample
-    is_paid = !is_draft
-    status = is_draft ? 'draft' : 'paid'
-    society = societies.sample.id
+    is_paid = is_draft ? false : [true, false].sample
+    status = if is_draft
+               'draft'
+             elsif is_paid
+               'paid'
+             else
+               'pending'
+             end
+    society = user.societies.all.sample
     number = date.strftime('%Y%m%d') + (i + 1).to_s
 
     items = []
@@ -102,9 +103,9 @@ end
     end
 
     Invoice.create(
-      user_id: users.sample.id,
-      society_id: societies.sample.id,
-      client_id: clients.sample.id,
+      user_id: user.id,
+      society_id: society.id,
+      client_id: society.clients.all.sample.id,
       title: "Invoice #{number}",
       number:,
       content: { items:, tax: contenttax_array }.to_json,
@@ -120,3 +121,18 @@ end
       category: %w[invoice quotation].sample
     )
   end
+
+  # SEED REGISTERS
+  10.times do
+    amount = rand(-10000.00..10000.00)
+    Register.create!(
+      society_id: user.societies.all.sample.id,
+      invoice_id: [user.invoices.all.sample.id, nil].sample,
+      title: Faker::Lorem.sentence,
+      paid_at: Time.zone.today - rand(0..3).month,
+      payment_method: %w[card cash transfer cheque other].sample,
+      is_income: amount >= 0,
+      amount: amount
+    )
+  end
+end
