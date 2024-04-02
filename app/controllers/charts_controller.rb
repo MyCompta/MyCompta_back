@@ -73,6 +73,21 @@ class ChartsController < ApplicationController
 
 
 
+  def sum_by_country_ordered_alphabet
+    @sum_by_country_ordered_alphabet = Client.where(user_id: current_user.id)
+                                            .joins(:invoices)
+                                            .group(:country, 'clients.id')
+                                            .pluck('clients.id', :country, 'SUM(invoices.total)')
+    render json: @sum_by_country_ordered_alphabet
+  end
+
+  # def sum_by_client_by_country
+  #   @sum_by_client_by_country = Invoice.where(user_id: current_user.id)
+  #                                     .includes(:society)
+  #                                     .group(:country)
+                                      
+  # end
+
 end
 
 

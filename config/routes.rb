@@ -26,6 +26,8 @@ Rails.application.routes.draw do
         get 'sum_all_client_by_society'                       #charts/sum_all_client_by_society?society_id=10
         get 'sum_all_sub_total_by_client_by_society'          #/charts/sum_all_sub_total_by_client_by_society?society_id=10
         get 'sum_all_tva_by_client_by_society'                #/charts/sum_all_tva_by_client_by_society?society_id=10
+
+        get 'sum_by_country_ordered_alphabet'
       
         
       end
