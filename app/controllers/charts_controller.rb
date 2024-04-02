@@ -81,8 +81,8 @@ class ChartsController < ApplicationController
     render json: @sum_by_country_ordered_alphabet
   end
 
-  # def number_invoice_by_country
-  #   @number_invoice_by_country= Invoice.where(user_id: current_user.id)
+  # def sum_by_client_by_country
+  #   @sum_by_client_by_country = Invoice.where(user_id: current_user.id)
   #                                     .includes(:society)
   #                                     .group(:country)
                                       
